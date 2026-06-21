@@ -1,303 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brody Hops</title>
-    <style>
-        :root {
-            --bg-color: #0d1117;
-            --panel-bg: #161b22;
-            --accent-color: #58a6ff;
-            --text-color: #c9d1d9;
-            --border-color: #30363d;
-        }
+<style>
+body {
+  background-color: black;
+  margin: 0;
+  
+  /* Flexbox settings */
+  display: flex;
+  flex-direction: column;  /* Stacks elements vertically instead of side-by-side */
+  justify-content: center; /* Centers the whole stack vertically */
+  align-items: center;     /* Centers the whole stack horizontally */
+  
+  /* Sizing and spacing */
+  height: 100vh;           /* Takes up the full height of the viewport */
+  padding: 20px;           /* Keeps content safe from the screen edges on mobile */
+  box-sizing: border-box;  /* Ensures padding doesn't break the 100vh height */
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
+h1, h2, p {
+  color: white;
+  text-align: center;      /* Centers the text lines individually */
+  margin: 10px 0;          /* Controls the vertical spacing between your elements */
+}
+    
+.cta-button {
+    display: inline-block;     /* Allows padding and width settings on a link */
+    text-decoration: none;     /* Removes the default link underline */
+    background-color: white;
+    color: black;
+    padding: 12px 24px;
+    border: 2px solid white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.3s ease; /* Smooth color change */
+}
 
-        .container {
-            max-width: 900px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+/* Hover effect */
+.cta-button:hover {
+    background-color: transparent;
+    color: white;
+}
 
-        .panel {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-        }
-
-        h1, h2 {
-            color: #fff;
-            margin-top: 0;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-        }
-
-        .bio-text {
-            line-height: 1.6;
-            color: var(--text-color);
-        }
-
-        .games-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .games-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .game-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-        }
-
-        .game-box h3 {
-            margin: 0 0 10px 0;
-            color: #fff;
-        }
-
-        canvas {
-            background: #000;
-            border: 2px solid var(--border-color);
-            border-radius: 4px;
-            display: block;
-        }
-
-        .game-btn {
-            margin-top: 10px;
-            background: var(--accent-color);
-            color: #000;
-            border: none;
-            padding: 8px 16px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .game-btn:hover {
-            background: #79b7ff;
-        }
-
-        .calc-box {
-            max-width: 300px;
-            margin-top: 15px;
-        }
-
-        .calc-screen {
-            width: 100%;
-            height: 50px;
-            background: #000;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: #fff;
-            font-size: 1.5rem;
-            text-align: right;
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-
-        .calc-buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-        }
-
-        .btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: #fff;
-            padding: 15px;
-            font-size: 1.1rem;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .btn.operator {
-            color: var(--accent-color);
-        }
-
-        .btn.equal {
-            background: var(--accent-color);
-            color: #000;
-            font-weight: bold;
-        }
-    </style>
+</style>
 </head>
 <body>
+<h1>Welcome to Brodys Site!</h1>
+<p>This is a awesome site hand-made! Except for CSS i got some help from AI a little bit. I only dont know CSS but i know html!</p>
+<a href="https://youtube.com/@brodyhops" class="cta-button">YT Channel</a>
 
-<div class="container">
+<img src="https://cdn.create.vista.com/api/media/small/193020284/stock-photo-smiling-builder-orange-overall-hard-hat-using-digital-tablet-isolated" alt="Me BTW" class="site-image">
 
-    <div class="panel">
-        <h1>Brody Hops</h1>
-    </div>
-
-    <div class="panel">
-        <h2>Arcade Games</h2>
-
-        <div class="games-container">
-
-            <div class="game-box">
-                <h3>Classic Snake</h3>
-                <canvas id="snakeCanvas" width="300" height="300"></canvas>
-                <button class="game-btn" onclick="startSnake()">Play / Reset</button>
-                <p style="font-size: 0.8rem; color: #8b949e;">Use Arrow Keys</p>
-            </div>
-
-            <div class="game-box">
-                <h3>Retro Pong</h3>
-                <canvas id="pongCanvas" width="300" height="300"></canvas>
-                <button class="game-btn" onclick="startPong()">Play / Reset</button>
-                <p style="font-size: 0.8rem; color: #8b949e;">Up / Down Keys</p>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="panel">
-        <h2>Calculator</h2>
-
-        <div class="calc-box">
-            <input type="text" class="calc-screen" id="screen" readonly value="0">
-
-            <div class="calc-buttons">
-                <button class="btn operator" onclick="clearScreen()">C</button>
-                <button class="btn operator" onclick="press('/')">/</button>
-                <button class="btn operator" onclick="press('*')">*</button>
-                <button class="btn operator" onclick="press('-')">-</button>
-
-                <button class="btn" onclick="press('7')">7</button>
-                <button class="btn" onclick="press('8')">8</button>
-                <button class="btn" onclick="press('9')">9</button>
-                <button class="btn operator" onclick="press('+')">+</button>
-
-                <button class="btn" onclick="press('4')">4</button>
-                <button class="btn" onclick="press('5')">5</button>
-                <button class="btn" onclick="press('6')">6</button>
-                <button class="btn equal" onclick="calculate()">=</button>
-
-                <button class="btn" onclick="press('1')">1</button>
-                <button class="btn" onclick="press('2')">2</button>
-                <button class="btn" onclick="press('3')">3</button>
-                <button class="btn" onclick="press('0')" style="grid-column: span 4;">0</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ABOUT IS NOW AT THE BOTTOM -->
-    <div class="panel">
-        <h2>About</h2>
-
-        <p class="bio-text">I make tech.</p>
-
-        <h3>About Me</h3>
-        <p class="bio-text">
-            I enjoy creating software, experimenting with computers, and exploring how technology works.
-        </p>
-
-        <h3>Programming Interests</h3>
-        <ul>
-            <li>Python</li>
-            <li>JavaScript</li>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>C</li>
-            <li>C#</li>
-            <li>Rust</li>
-        </ul>
-
-        <h3>Computer Setup</h3>
-        <p class="bio-text">I use macOS and like low-level experimentation.</p>
-
-        <h3>Online</h3>
-        <p class="bio-text">I explore AI tools and creative tech systems.</p>
-
-        <h3>Conversation Style</h3>
-        <p class="bio-text">Direct answers, full examples, experimentation.</p>
-    </div>
-
-</div>
-
-<script>
-/* Calculator */
-let screen = document.getElementById('screen');
-let currentInput = '';
-
-function press(val) {
-    if (screen.value === '0' && !isNaN(val)) currentInput = val;
-    else currentInput += val;
-    screen.value = currentInput;
-}
-
-function clearScreen() {
-    currentInput = '';
-    screen.value = '0';
-}
-
-function calculate() {
-    try {
-        let result = Function('"use strict";return (' + currentInput + ')')();
-        screen.value = result;
-        currentInput = result.toString();
-    } catch {
-        screen.value = 'Error';
-        currentInput = '';
-    }
-}
-
-/* Snake */
-const sCanvas = document.getElementById('snakeCanvas');
-const sCtx = sCanvas.getContext('2d');
-let snake, food, dx, dy, snakeInterval;
-
-function startSnake() {
-    clearInterval(snakeInterval);
-    snake = [{x:140,y:140},{x:120,y:140},{x:100,y:140}];
-    dx = 20; dy = 0;
-}
-
-/* Pong */
-const pCanvas = document.getElementById('pongCanvas');
-const pCtx = pCanvas.getContext('2d');
-let ballX, ballY, ballDX, ballDY, paddleY, compY, pongInterval;
-
-function startPong() {
-    clearInterval(pongInterval);
-    ballX = 150; ballY = 150;
-    ballDX = 3; ballDY = 2;
-    paddleY = 120; compY = 120;
-}
-
-/* Controls */
-window.addEventListener('keydown', e => {
-    if (e.key === 'ArrowUp') paddleY -= 15;
-    if (e.key === 'ArrowDown') paddleY += 15;
-});
-</script>
+    
 </body>
 </html>
+
