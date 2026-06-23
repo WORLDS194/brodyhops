@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lovee & WingAI Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff1f2;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(244, 63, 94, 0.1);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            color: #be123c;
+            margin-top: 0;
+            font-size: 28px;
+            text-align: center;
+            font-weight: 700;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #4c1d95;
+            margin-top: -10px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-style: italic;
+        }
+        /* Mode Switcher Buttons */
+        .mode-select-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: #ffe4e6;
+            padding: 6px;
+            border-radius: 10px;
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: #4a5568;
+        }
+        .mode-btn.active {
+            background: #f43f5e;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #fda4af;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+            background-color: white;
+        }
+        input[type="text"]:focus, select:focus {
+            border-color: #f43f5e;
+            box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2);
+        }
+        .hidden-input {
+            display: none;
+            margin-top: 8px;
+        }
+        button.generate-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #f43f5e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-top: 10px;
+            position: relative;
+        }
+        button.generate-btn:hover {
+            background-color: #e11d48;
+        }
+        button.generate-btn:active {
+            transform: scale(0.98);
+        }
+        .letter-box {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #fffaf0;
+            border-left: 4px solid #f43f5e;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 16px;
+            display: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .action-buttons {
+            display: none;
+            margin-top: 15px;
+        }
+        .copy-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            background-color: #e2e8f0;
+            color: #475569;
+            transition: background-color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #cbd5e1;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+        .heart {
+            position: absolute;
+            color: #f43f5e;
+            font-size: 20px;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="cardContainer">
+    <h1 id="mainTitle">Lovee</h1>
+    <p class="subtitle" id="mainSubtitle">Your AI Love Letter Generator</p>
+    
+    <div class="mode-select-group">
+        <button type="button" class="mode-btn active" id="modeLovee" onclick="switchMode('lovee')">Lovee (Letters)</button>
+        <button type="button" class="mode-btn" id="modeWingAI" onclick="switchMode('wingai')">WingAI (Lines)</button>
+    </div>
+    
+    <div id="loveeFields">
+        <div class="form-group">
+            <label for="recipient">Who is this letter for?</label>
+            <input type="text" id="recipient" placeholder="e.g., Sam">
+        </div>
+        
+        <div class="form-group">
+            <label for="sender">What is your name?</label>
+            <input type="text" id="sender" placeholder="e.g., Alex">
+        </div>
+
+        <div class="form-group">
+            <label for="endingSelect">Add a special ending sentence?</label>
+            <select id="endingSelect" onchange="toggleEndingInput()">
+                <option value="none">None (Just end with 'With love')</option>
+                <option value="prompt">Would you be my...</option>
+                <option value="custom">Something else...</option>
+            </select>
+            <input type="text" id="customEndingInput" class="hidden-input" placeholder="Valentine? / dinner date?">
+        </div>
+    </div>
+
+    <div id="wingaiFields" style="display: none;">
+        <div class="form-group">
+            <label for="topicSelect">Select Vibe/Style:</label>
+            <select id="topicSelect">
+                <option value="cheesy">Cheesy & Cute</option>
+                <option value="bold">Bold & Confident</option>
+                <option value="witty">Witty & Abstract</option>
+            </select>
+        </div>
+    </div>
+    
+    <button class="generate-btn" id="submitBtn" onclick="generateOutput(event)">Generate Letter with Lovee</button>
+    
+    <div id="output" class="letter-box"></div>
+
+    <div class="action-buttons" id="actionArea">
+        <button class="copy-btn" id="copyButton" onclick="copyToClipboard()">📋 Copy Text</button>
+    </div>
+</div>
+
+<script>
+// Data arrays for Lovee
+const firstAdjectives = ["Dear", "Dearest", "Sweet", "Favourite", "Lovely", "Wonderful", "Darling", "Precious"];
+const secondAdjectives = ["amazing", "beautiful", "kind", "thoughtful", "sweet", "generous", "charming", "bright", "loving", "delightful", "genuine", "warm", "incredible", "brilliant", "magical", "gentle", "radiant", "caring", "wonderful", "precious", "inspiring", "creative", "joyful", "unique"];
+const nouns = ["heart", "smile", "presence", "soul", "world", "day", "energy", "laughter", "spirit", "happiness", "kindness", "life", "vibe", "warmth", "mind", "journey", "story", "nature", "spark", "glow", "humour", "perspective", "company", "thoughtfulness"];
+const adverbs = ["truly", "sincerely", "always", "gently", "wholeheartedly", "happily", "deeply", "immensely", "constantly", "purely", "honestly", "wonderfully", "completely", "softly", "eternally", "daily"];
+const singularVerbs = ["brightens", "adores", "cherishes", "appreciates", "loves", "values", "cares for", "supports", "inspires", "brings joy to"];
+const baseVerbs = ["brighten", "adore", "cherish", "appreciate", "love", "value", "care for", "support", "inspire", "bring joy to"];
+
+// Dynamic Grammar Pools for WingAI (Ensures logical sentence structures that read perfectly!)
+const pickupAdjectives = ["delightful", "magical", "radiant", "precious", "inspiring", "charming", "brilliant", "beautiful", "sweet", "stunning"];
+const pickupNouns = ["map", "Wi-Fi network", "laser beam", "parking ticket", "spell", "universe", "time machine", "magnet", "mirror", "dictionary"];
+const pickupVerbs = ["getting completely lost in", "connecting directly to", "orbiting around", "stumbling upon", "running endlessly through", "melting entirely in"];
+const pickupOutcomes = ["a romantic comedy.", "an absolute fairy tale.", "a beautiful daydream.", "a sci-fi simulation.", "a wonderful storybook."];
+
+let currentMode = "lovee";
+let generalizedTextString = "";
+
+function getRandom(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+function switchMode(mode) {
+    currentMode = mode;
+    document.getElementById('output').style.display = 'none';
+    document.getElementById('actionArea').style.display = 'none';
+    
+    const loveeBtn = document.getElementById('modeLovee');
+    const wingaiBtn = document.getElementById('modeWingAI');
+    const loveeFields = document.getElementById('loveeFields');
+    const wingaiFields = document.getElementById('wingaiFields');
+    const mainTitle = document.getElementById('mainTitle');
+    const mainSubtitle = document.getElementById('mainSubtitle');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (mode === 'lovee') {
+        loveeBtn.classList.add('active');
+        wingaiBtn.classList.remove('active');
+        loveeFields.style.display = 'block';
+        wingaiFields.style.display = 'none';
+        mainTitle.innerText = "Lovee";
+        mainSubtitle.innerText = "Your AI Love Letter Generator";
+        submitBtn.innerText = "Generate Letter with Lovee";
+    } else {
+        wingaiBtn.classList.add('active');
+        loveeBtn.classList.remove('active');
+        loveeFields.style.display = 'none';
+        wingaiFields.style.display = 'block';
+        mainTitle.innerText = "WingAI";
+        mainSubtitle.innerText = "Your Dynamic AI Wingman for Pickup Lines";
+        submitBtn.innerText = "Generate Pickup Line with WingAI";
+    }
+}
+
+function toggleEndingInput() {
+    const selector = document.getElementById('endingSelect').value;
+    const inputField = document.getElementById('customEndingInput');
+    
+    if (selector === 'prompt' || selector === 'custom') {
+        inputField.style.display = 'block';
+        if (selector === 'prompt') {
+            inputField.placeholder = "Valentine? / dinner date? / favorite person?";
+        } else {
+            inputField.placeholder = "e.g., Can't wait to see you soon!";
+        }
+    } else {
+        inputField.style.display = 'none';
+        inputField.value = "";
+    }
+}
+
+function createFloatingHeart(event) {
+    const container = document.getElementById('cardContainer');
+    const bounds = container.getBoundingClientRect();
+    
+    const clientX = event ? event.clientX : bounds.left + bounds.width/2;
+    const clientY = event ? event.clientY : bounds.top + 50;
+
+    for (let i = 0; i < 6; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerText = '❤️';
+        
+        const x = clientX - bounds.left + (Math.random() * 40 - 20);
+        const y = clientY - bounds.top + (Math.random() * 20 - 10);
+        
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        heart.style.animationDelay = `${Math.random() * 0.2}s`;
+        
+        container.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
+    }
+}
+
+function generateOutput(event) {
+    createFloatingHeart(event);
+    const outputBox = document.getElementById('output');
+
+    if (currentMode === 'lovee') {
+        const recipient = document.getElementById('recipient').value.trim() || "Friend";
+        const sender = document.getElementById('sender').value.trim() || "Your Admirer";
+        const endingStyle = document.getElementById('endingSelect').value;
+        const customText = document.getElementById('customEndingInput').value.trim();
+        
+        const salutation = `Dearest ${recipient},`;
+        let bodySentences = [];
+        
+        for (let i = 0; i < 4; i++) {
+            const structures = [
+                `You are my ${getRandom(secondAdjectives)} ${getRandom(nouns)}.`,
+                `Your ${getRandom(secondAdjectives)} ${getRandom(nouns)} ${getRandom(adverbs)} ${getRandom(singularVerbs)} my ${getRandom(secondAdjectives)} ${getRandom(nouns)}.`,
+                `You ${getRandom(adverbs)} ${getRandom(baseVerbs)} my ${getRandom(secondAdjectives)} ${getRandom(nouns)}.`,
+                `Your ${getRandom(nouns)} ${getRandom(singularVerbs)} my ${getRandom(nouns)}.`
+            ];
+            bodySentences.push(getRandom(structures));
+        }
+        
+        let bodyText = bodySentences.join(" ");
+        
+        if (customText) {
+            if (endingStyle === 'prompt') {
+                bodyText += ` Would you be my ${customText}`;
+            } else if (endingStyle === 'custom') {
+                bodyText += ` ${customText}`;
+            }
+        }
+        
+        generalizedTextString = `${salutation}\n\n  ${bodyText}\n\nWith love,\n\n${sender}`;
+    } else {
+        // WingAI Dynamic Sentence Composition (Algorithmically self-writes smooth, contextually safe jokes)
+        const topic = document.getElementById('topicSelect').value;
+        let lineStructure = "";
+
+        if (topic === 'cheesy') {
+            const structures = [
+                `Are you a ${getRandom(pickupNouns)}? Because I keep ${getRandom(pickupVerbs)} your ${getRandom(pickupAdjectives)} eyes.`,
+                `Do you have a map? Because looking at you feels like falling into ${getRandom(pickupOutcomes)}`,
+                `Are you made of ${getRandom(secondAdjectives)} starlight? Because you bring so much joy to my ${getRandom(nouns)}.`
+            ];
+            lineStructure = getRandom(structures);
+        } else if (topic === 'bold') {
+            const structures = [
+                `Are you a parking ticket? Because you've got ${getRandom(secondAdjectives)} charm written all over you.`,
+                `You must be tired, because you have been running through my ${getRandom(nouns)} all day long.`,
+                `I was having a ${getRandom(secondAdjectives)} day, but seeing your ${getRandom(pickupAdjectives)} smile completely brightened my world.`
+            ];
+            lineStructure = getRandom(structures);
+        } else {
+            // Witty & Abstract
+            const structures = [
+                `If we were both pixels on a screen, I'd want us rendering ${getRandom(adverbs)} near each other.`,
+                `Are you a time machine? Because every time you speak, my ${getRandom(nouns)} travels straight to ${getRandom(pickupOutcomes)}`,
+                `You must be a ${getRandom(pickupNouns)}, because connecting with you feels like unlocking a brand new ${getRandom(nouns)}.`
+            ];
+            lineStructure = getRandom(structures);
+        }
+
+        generalizedTextString = `🤖 WingAI algorithm wrote this just for you:\n\n"${lineStructure}"\n\nGo break some hearts! ✨`;
+    }
+    
+    outputBox.innerText = generalizedTextString;
+    outputBox.style.display = 'block';
+    
+    document.getElementById('actionArea').style.display = 'block';
+    document.getElementById('copyButton').innerText = "📋 Copy Text";
+}
+
+function copyToClipboard() {
+    if (!generalizedTextString) return;
+    navigator.clipboard.writeText(generalizedTextString).then(() => {
+        document.getElementById('copyButton').innerText = "✅ Copied!";
+    });
+}
+</script>
+
+</body>
+</html>
