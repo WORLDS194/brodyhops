@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brody — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #6b6b6b;
+    --bg: #ffffff;
+    --line: #e6e6e6;
+    --chip-bg: #f5f5f5;
+    --accent: #1a1a1a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 24px 100px;
+  }
+
+  h1.page-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 44px;
+    margin: 0 0 48px;
+  }
+
+  .hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 64px;
+    flex-wrap: wrap;
+    background: #ffffff;
+  }
+
+  .hero-text { flex: 1 1 380px; }
+
+  .hero-text h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    margin: 0 0 16px;
+  }
+
+  .hero-text p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin: 0 0 16px;
+    max-width: 480px;
+  }
+
+  .hero-text p strong { font-weight: 700; }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 8px;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .cta:hover { background: var(--chip-bg); transform: translateY(-1px); }
+
+  .hero-media {
+    flex: 0 0 280px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .hero-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  h2.section-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    margin: 0 0 20px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 28px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 0 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+
+  .tab .icon { font-size: 15px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 64px;
+  }
+
+  .skill-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .skill-chip .icon { font-size: 16px; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .project-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .project-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  .project-card p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    background: var(--chip-bg);
+    padding: 5px 12px;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 640px) {
+    .skills-grid, .projects-grid { grid-template-columns: 1fr; }
+    .hero { flex-direction: column-reverse; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <h1 class="page-title">Portfolio</h1>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Hello, I'm Brody.</h2>
+      <p>I'm <strong>really good</strong> at static HTML, and I'm a vibecoder who makes really cool projects.</p>
+      <p>I build fast, no-fuss static sites — no frameworks, no build steps, <strong>just clean HTML and good vibes</strong>.</p>
+      <a class="cta" href="mailto:brody@brody.gleeze.com">✉️ Get in touch</a>
+    </div>
+    <div class="hero-media">
+      <img src="https://i.postimg.cc/r0W735Bv/brody-cropped.png" alt="" width="310" height="232" />
+    </div>
+  </div>
+
+  <h2 class="section-title">Skills</h2>
+  <div class="tabs" id="skills-tabs">
+    <button class="tab active" data-panel="skills-software"><span class="icon">🖥️</span> Software</button>
+    <button class="tab" data-panel="skills-expertise"><span class="icon">✅</span> Expertise</button>
+    <button class="tab" data-panel="skills-language"><span class="icon">💬</span> Language</button>
+  </div>
+
+  <div class="panel active" id="skills-software">
+    <div class="skills-grid">
+      <div class="skill-chip"><span class="icon">🧱</span> HTML</div>
+      <div class="skill-chip"><span class="icon">🎨</span> CSS</div>
+      <div class="skill-chip"><span class="icon">⚡</span> JavaScript</div>
+      <div class="skill-chip"><span class="icon">🐙</span> Git &amp; GitHub</div>
+      <div class="skill-chip"><span class="icon">🤖</span> AI-assisted coding</div>
+      <div class="skill-chip"><span class="icon">🌐</span> Static hosting</div>
+    </div>
+  </div>
+
+  <div class="panel" id="skills-expertise">
+    <div class="skills-grid">
+      <div class="skill-chip"><span class="icon">🚀</span> Rapid prototyping</div>
+      <div class="skill-chip"><span class="icon">🧹</span> Clean, no-framework sites</div>
+      <div class="skill-chip"><span class="icon">✨</span> Vibecoding</div>
+    </div>
+  </div>
+
+  <div class="panel" id="skills-language">
+    <div class="skills-grid">
+      <div class="skill-chip"><span class="icon">🇺🇸</span> English</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function setupTabs(tabsId) {
+    const tabs = document.querySelectorAll('#' + tabsId + ' .tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const group = tab.closest('.tabs').querySelectorAll('.tab');
+        const panels = [];
+        group.forEach(t => panels.push(document.getElementById(t.dataset.panel)));
+        panels.forEach(p => p.classList.remove('active'));
+
+        document.getElementById(tab.dataset.panel).classList.add('active');
+      });
+    });
+  }
+  setupTabs('skills-tabs');
+</script>
+
+</body>
+</html>
